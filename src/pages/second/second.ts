@@ -19,7 +19,7 @@ export class SecondPage {
  value:string;
  items = [];
  shoppingList = {
-   _key:'',
+   key:'',
    name : ''
  };
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
@@ -29,9 +29,10 @@ export class SecondPage {
     //Retrieve The List
     firebase.database().ref('/shoppingList/').on("value", (snapshot) =>
     {
+      this.items = [];
       snapshot.forEach((snap) =>
       {
-        this.shoppingList._key = snap.key;
+        this.shoppingList.key = snap.key;
     
  
         console.log(snap.val().name + ' key ' + snap.key)
@@ -64,8 +65,8 @@ export class SecondPage {
   delete(item){
     
     var database = firebase.database();
-    database.ref('/shoppingList/'+item.key).remove();
-    this.items = [];
+    database.ref('/shoppingList/'+item).remove();
+     
   
    
   }
